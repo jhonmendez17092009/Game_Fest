@@ -15,6 +15,12 @@ ventana = pygame.display.set_mode((600, 760))
 pygame.display.set_caption("Golf Fest")
 Clock = pygame.time.Clock()
 
+AGUA = pygame.mixer.music.load("sounds/agua.mp3")
+pygame.mixer.music.play(1,0.0)
+
+GOLPE = pygame.mixer.Sound("sounds/golpe.mp3")
+VICTORIA = pygame.mixer.Sound("sounds/victoria.mp3")
+
 logo = pygame.image.load("logo.jpg")
 logo = pygame.transform.scale(logo, (300, 300))
 mjs = pygame.image.load("mjs.png")

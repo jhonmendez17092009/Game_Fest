@@ -4,6 +4,13 @@ import random
 import math
 
 pygame.init()
+pygame.mixer.init()
+
+pygame.mixer.music.load("sounds/agua.mp3")
+pygame.mixer.music.play(-1)
+
+GOLPE = pygame.mixer.Sound("sounds/golpe.mp3")
+VICTORIA = pygame.mixer.Sound("sounds/victoria.mp3")
 
 F = (0, 167, 231) 
 P = (69, 194, 2)  
@@ -38,7 +45,6 @@ arbol_imgs = [pygame.transform.scale(img, (40, 40)) for img in arbol_imgs]
 
 pantalla_inicio = True
 nivel = 1
-
 
 radio = 10
 vx, vy = 0, 0
@@ -128,7 +134,6 @@ lagos = [
 
 campo_rect = pygame.Rect(38, 78, 524, 484)
 
-
 def fondo_nivel2():
     ventana.fill(VERDE_OSCURO)
     pygame.draw.rect(ventana, VERDE_CESPED, (30, 70, 540, 500))
@@ -187,6 +192,7 @@ while True:
                     vx = dx / 10
                     vy = dy / 10
                     golpes_restantes -= 1
+                    GOLPE.play()
                 dragging = False
                 start_pos = None
         elif nivel == 2:
@@ -208,6 +214,7 @@ while True:
                     vy2 = dy / distancia * fuerza
                     en_movimiento = True
                     golpes += 1
+                    GOLPE.play()
                 arrastrando = False
                 punto_inicio = None
 
@@ -259,6 +266,7 @@ while True:
         pygame.draw.circle(ventana, B, (int(ball_x), int(ball_y)), radio)
         if math.hypot(ball_x - hole_pos[0], ball_y - hole_pos[1]) < hole_radius:
             nivel = 2
+            VICTORIA.play()
         if golpes_restantes == 0 and vx == 0 and vy == 0:
             fuente_fin = pygame.font.SysFont("Arial", 35, True)
             ventana.blit(fuente_fin.render("¡Se acabaron los golpes!", True, R), (120, 320))
@@ -299,5 +307,6 @@ while True:
             victoria = True
             en_movimiento = False
             vx2 = vy2 = 0
+            VICTORIA.play()
         fondo_nivel2()
     pygame.display.flip()
